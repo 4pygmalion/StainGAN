@@ -33,12 +33,12 @@ class UnalignedDataset(BaseDataset):
             index_B = random.randint(0, self.B_size - 1)
         B_path = self.B_paths[index_B]
         # print('(A, B) = (%d, %d)' % (index_A, index_B))
-        A_img = Image.open(A_path).convert('RGB')
-        B_img = Image.open(B_path).convert('RGB')
+        A_img = Image.open(A_path).convert("RGB")
+        B_img = Image.open(B_path).convert("RGB")
 
         A = self.transform(A_img)
         B = self.transform(B_img)
-        if self.opt.which_direction == 'BtoA':
+        if self.opt.which_direction == "BtoA":
             input_nc = self.opt.output_nc
             output_nc = self.opt.input_nc
         else:
@@ -52,11 +52,10 @@ class UnalignedDataset(BaseDataset):
         if output_nc == 1:  # RGB to gray
             tmp = B[0, ...] * 0.299 + B[1, ...] * 0.587 + B[2, ...] * 0.114
             B = tmp.unsqueeze(0)
-        return {'A': A, 'B': B,
-                'A_paths': A_path, 'B_paths': B_path}
+        return {"A": A, "B": B, "A_paths": A_path, "B_paths": B_path}
 
     def __len__(self):
         return max(self.A_size, self.B_size)
 
     def name(self):
-        return 'UnalignedDataset'
+        return "UnalignedDataset"

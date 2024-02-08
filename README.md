@@ -1,6 +1,5 @@
 # StainGAN
-StainGAN implementation based on Cycle-Consistency Concept
-
+StainGAN implementation based on Cycle-Consistency Concept (Forked Repository)
 For more information visit website.
 
 ## Structure
@@ -9,8 +8,28 @@ For more information visit website.
  * Post-processing.
  * Evaluation 
 
-## Datasets
 
+## 사용법(Example)
+```python3
+python train.py \
+  --dataroot data/images \
+  --phaseA 3dh \
+  --phaseB leica \
+  --batchSize 2 \
+  --niter 25  \
+  --niter_decay 25 \
+  --loadSize 512 \
+  --fineSize 512 \
+  --name dh32leica \
+  --model cycle_gan \
+  --no_dropout 
+
+--phaseA: source image dir
+--phaseB: target iamge dir
+```
+
+
+## Datasets
 The evaluation was done using the Camelyon16 challenge (https://camelyon16.grand-challenge.org/) consisting of 400 whole-slide images collected
 in two different labs in Radboud University Medical Center (lab 1) and University
 Medical Center Utrecht (lab 2). Otsu thresholding was used to remove the
