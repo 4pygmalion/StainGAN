@@ -41,6 +41,10 @@ python train.py \
 >>> image = Image.open("/vast/AI_team/heon/inhouse_tiling_3dh/train/malignant/2023S 0024731020102/2023S 0024731020102_67584_178176_69632_180224.jpg")
 >>> res = stain_gan.transform(np.array(image))
 >>> plt.imshow(res)
+
+# 상위모듈에서
+>>> from StainGAN import StainGAN
+>>> 상동
 ```
 
 
