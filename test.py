@@ -11,11 +11,26 @@ opt.nThreads = 1  # test code only supports nThreads = 1
 opt.batchSize = 1  # test code only supports batchSize = 1
 opt.serial_batches = True  # no shuffle
 opt.no_flip = True  # no flip
-
+opt.isTrain = True
+opt.no_lsgan = False
+opt.ndf = 64
+opt.continue_train = False
+opt.n_layers_D = 3
+opt.lr = 0.005
+opt.pool_size = 50
+opt.aicha_loss = False
+opt.beta1 = 0.001
+opt.lr_policy = "lambda"
+opt.epoch_count = 2
+opt.niter = 2
+opt.niter_decay = 100
 data_loader = CreateDataLoader(opt)
 dataset = data_loader.load_data()
 model = create_model(opt)
+opt.isTrain = False
 visualizer = Visualizer(opt)
+
+
 # create website
 # web_dir = os.path.join(opt.results_dir, opt.name, '%s_%s' % (opt.phase, opt.which_epoch))
 

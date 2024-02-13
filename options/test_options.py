@@ -28,4 +28,10 @@ class TestOptions(BaseOptions):
         self.parser.add_argument(
             "--how_many", type=int, default=0, help="how many test images to run"
         )
+        self.parser.add_argument(
+            "--phaseA",
+        )
+        self.parser.add_argument(
+            "--phaseB",
+        )
         self.isTrain = False
