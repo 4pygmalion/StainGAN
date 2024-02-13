@@ -28,6 +28,21 @@ python train.py \
 --phaseB: target iamge dir
 ```
 
+## 포워딩
+```python3
+# init StainGAN
+>>> from inference import StainGAN
+>>> params = torch.load("/home/heon/repositories/StainGAN/checkpoints/aicha/3dhtoleica/latest_net_G_A.pth")
+>>> stain_gan = StainGAN(params, device="cuda:1")
+
+# Forward
+>>> from PIL import Image
+>>> import numpy as np
+>>> image = Image.open("/vast/AI_team/heon/inhouse_tiling_3dh/train/malignant/2023S 0024731020102/2023S 0024731020102_67584_178176_69632_180224.jpg")
+>>> res = stain_gan.transform(np.array(image))
+>>> plt.imshow(res)
+```
+
 
 ## Datasets
 The evaluation was done using the Camelyon16 challenge (https://camelyon16.grand-challenge.org/) consisting of 400 whole-slide images collected
