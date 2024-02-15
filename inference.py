@@ -1,4 +1,7 @@
+import os
+import sys
 
+sys.path.insert(0, os.path.abspath(__file__))
 import argparse
 import numpy as np
 import torch
@@ -7,6 +10,7 @@ import torch
 from models.networks import define_G
 from data.base_dataset import get_transform
 from util.util import tensor2im
+
 
 # TODO:
 def set_opt():
@@ -55,6 +59,7 @@ def set_opt():
 
 OPT = set_opt()
 
+
 class StainGAN:
     """Example
     # init StainGAN
@@ -86,22 +91,21 @@ class StainGAN:
 
         self.model.to(device)
         self.model.eval()
-        self.model.load_state_dict(params)        
-        
+        self.model.load_state_dict(params)
 
     def _build_model(self):
-        return define_G(OPT.input_nc,
+        return define_G(
+            OPT.input_nc,
             OPT.output_nc,
             OPT.ngf,
             OPT.which_model_netG,
             OPT.norm,
             not OPT.no_dropout,
             OPT.init_type,
-            OPT.gpu_ids
+            OPT.gpu_ids,
         )
 
-    
-    def transform(self, x:np.ndarray) -> np.ndarray:
+    def transform(self, x: np.ndarray) -> np.ndarray:
         """
         Transform input image(s) using the StainGAN model.
 
@@ -114,10 +118,10 @@ class StainGAN:
 
         if not hasattr(self, "preprocess"):
             self.preprocess = get_transform(OPT)
-            
+
         with torch.no_grad():
             x = self.preprocess(x)
             x = x.to(self.device)
-            generative_image:torch.Tensor = self.model(x)
-        
+            generative_image: torch.Tensor = self.model(x)
+
         return tensor2im(generative_image.detach().cpu().unsqueeze(0))
