@@ -7,6 +7,7 @@ from models.models import create_model
 
 # from util.visualizer_time import Visualizer
 from matplotlib import pyplot as plt
+
 opt = TrainOptions().parse()
 data_loader = CreateDataLoader(opt)
 dataset = data_loader.load_data()
@@ -32,12 +33,18 @@ for epoch in range(opt.epoch_count, opt.niter + opt.niter_decay + 1):
         if total_steps % opt.display_freq == 0:
             save_result = total_steps % opt.update_html_freq == 0
             visuals = model.get_current_visuals()
-        
+
             fig, axes = plt.subplots(1, 8, figsize=(20, 12))
             for i, (name, image) in enumerate(visuals.items()):
                 axes[i].imshow(image)
                 axes[i].set_title(name)
-            plt.savefig(os.path.join(opt.checkpoints_dir, f"dataset.{i}.step{total_steps}.epoch{epoch}.png"))
+            plt.savefig(
+                os.path.join(
+                    opt.checkpoints_dir,
+                    opt.name,
+                    f"dataset.{i}.step{total_steps}.epoch{epoch}.png",
+                )
+            )
             plt.clf()
             plt.cla()
             # visualizer.display_current_results(model.get_current_visuals(), epoch, save_result)
@@ -47,7 +54,7 @@ for epoch in range(opt.epoch_count, opt.niter + opt.niter_decay + 1):
             t = (time.time() - iter_start_time) / opt.batchSize
             # visualizer.print_current_errors(epoch, epoch_iter, errors, t)
             # if opt.display_id > 0:
-                # visualizer.plot_current_errors(epoch, float(epoch_iter) / dataset_size, opt, errors)
+            # visualizer.plot_current_errors(epoch, float(epoch_iter) / dataset_size, opt, errors)
 
         if total_steps % opt.save_latest_freq == 0:
             print(
